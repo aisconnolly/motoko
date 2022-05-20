@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Imperative control flow :: Motoko documentation</title>
+    <meta name="generator" content="Antora 2.3.4">
+<link rel="stylesheet" href="../../_/css/site.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" /><meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:title" content="The Internet Computer | Documentation" />
+<meta property="og:description" content="Documentation for the internet computer." />
+<meta property="og:image" content="../../_/img/share.jpg" />
+<meta property="og:image:url" content="../../_/img/share.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@DFINITYDev" />
+<meta name="twitter:image" content="../../_/img/logo-RGB.png" />
+<meta name="twitter:image:alt" content="DFINITY Logo" />    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="logo-container" href="https://dfinity.org/">
+        <img class="header-logo" src="../../_/img/logo.svg">
+        <h1 class="header-title">Motoko documentation</h1>
+      </a>
+    </div>
+    <div class="nav-items-wrapper">
+      <div class="search-container">
+  <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M11.8654 12.5892C10.8213 13.4695 9.47259 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8C14 9.47209 13.4699 10.8204 12.5901 11.8643L17.3625 16.6367L16.6377 17.3615L11.8654 12.5892ZM12.9333 8C12.9333 10.7246 10.7246 12.9333 8 12.9333C5.2754 12.9333 3.06667 10.7246 3.06667 8C3.06667 5.2754 5.2754 3.06667 8 3.06667C10.7246 3.06667 12.9333 5.2754 12.9333 8Z"
+      fill="black" />
+  </svg>
+
+
+  <input class="search-input" placeholder="Search" type="search" />
+</div>      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div id="topbar-nav" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" target="blank" href="https://forum.dfinity.org/">Forum</a>
+          <a class="navbar-item" target="blank" href="mailto:support@dfinity.org?subject=Feedback - SDK Developer Center">Email us</a>
+          <a class="navbar-item" target="blank" href="https://www.twitter.com/dfinitydev">
+            <img src="../../_/img/social/twitter-icon.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="file:///build/doc/modules/language-guide/pages/control-flow.adoc"><svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a></div>
+</div>
+<div class="main-content">
+<article class="doc">
+<h1 class="page">Imperative control flow</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are two key categories of control flow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>declarative</em>, when the structure of some value  guides control and the selection of the next expression to evaluate, like in <code>if</code> and <code>switch</code> expressions;</p>
+</li>
+<li>
+<p><em>imperative</em>  where control changes abruptly according to a programmer&#8217;s command, abondoning regular control flow; examples are <code>break</code> and <code>continue</code>, but also <code>return</code> and <code>throw</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Imperative control flow often goes hand-in-hand with state changes and other flavors of side-effects, such as error handling and input/output.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="early-return"><a class="anchor" href="#early-return"></a>Early <code>return</code> from <code>func</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Normally, the result of a function is the value of its body. Sometimes, during evaluation of the body, the result is available before the end of evaluation. In such situations the <code>return ⟨exp⟩</code> construct can be used to abandon the rest of the computation and immediately exit the function with a result.
+Similarly, where permitted, <code>throw</code> may be used to abandon a computation with an error.</p>
+</div>
+<div class="paragraph">
+<p>When a function has unit result type, the shorthand <code>return</code> may be used instead of the equivalent <code>return ()</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="loops-labels"><a class="anchor" href="#loops-labels"></a>Loops and labels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Motoko provides several kinds of repetition constructs, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>for</code> expressions for iterating over members of structured data.</p>
+</li>
+<li>
+<p><code>loop</code> expressions for programmatic repetition (optionally with termination condition).</p>
+</li>
+<li>
+<p><code>while</code> loops for programmatic repetition with entry condition.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Any of these can be prefixed with a <code>label ⟨name⟩</code> qualifier to give the loop a symbolic name. Named loops are useful for imperatively changing  control flow to continue from the entry or exit of the named loop.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>re-entering the loop with <code>continue ⟨name⟩</code>, or</p>
+</li>
+<li>
+<p>exiting the loop altogether with <code>break ⟨name⟩</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the following example, the <code>for</code> expression loops over characters of some text and abandons iteration as soon as an exclamation sign is encountered.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Debug "mo:base/Debug";
+label letters for (c in "ran!!dom".chars()) {
+  Debug.print(debug_show(c));
+  if (c == '!') { break letters };
+  // ...
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_labeled_expressions"><a class="anchor" href="#_labeled_expressions"></a>Labeled expressions</h3>
+<div class="paragraph">
+<p>There are two other facets to <code>label</code>&#8203;s that are less mainstream, but come in handy in certain situations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>label</code>&#8203;s can be typed</p>
+</li>
+<li>
+<p><em>any</em> expression (not just loops) can be named by prefixing it with a label; <code>break</code> allows one to short-circuit the expression&#8217;s evaluation by providing an immediate value for its result. (This is similar to exiting a function early using <code>return</code>, but without the overhead of declaring and calling a function.)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The syntax for type-annotated labels is <code>label ⟨name⟩ : ⟨type⟩ ⟨expr⟩</code>, signifying that any expression can be exited using a <code>break ⟨name⟩ ⟨alt-expr⟩</code> construct that returns the value of <code>&lt;alt-expr&gt;</code> as the value of <code>⟨expr⟩</code>, short-circuiting evaluation of <code>&lt;expr&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Judicious use of these constructs allows the programmer to focus on the primary program logic and handle exceptional case via <code>break</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Text "mo:base/Text";
+import Iter "mo:base/Iter";
+
+type Host = Text;
+let formInput = "us@dfn";
+
+let address = label exit : ?(Text, Host) {
+  let splitted = Text.split(formInput, #char '@');
+  let array = Iter.toArray&lt;Text&gt;(splitted);
+  if (array.size() != 2) { break exit(null) };
+  let account = array[0];
+  let host = array[1];
+  // if (not (parseHost(host))) { break exit(null) };
+  ?(account, host)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Naturally, labeled common expressions don&#8217;t allow <code>continue</code>. In terms of typing, both <code>⟨expr⟩</code> and <code>⟨alt-expr⟩</code>&#8203;'s types must conform with the label&#8217;s declared <code>⟨type⟩</code>. If a label is only given a <code>⟨name⟩</code>, then its <code>⟨type⟩</code> defaults to unit (<code>()</code>). Similarly a <code>break</code> without an <code>⟨alt-expr⟩</code> is shorthand for the value unit (<code>()</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="option-blocks"><a class="anchor" href="#option-blocks"></a>Option blocks and null breaks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like many other high-level languages, Motoko lets you opt in to <code>null</code> values, tracking possible occurences of <code>null</code> values using option types of the form <code>?T</code>.
+This is to both to encourage you to avoid using <code>null</code> values when possible, and to consider the possiblity of <code>null</code> values when necessary.</p>
+</div>
+<div class="paragraph">
+<p>The latter could be cumbersome, if the only way to test a value for <code>null</code> were with a verbose <code>switch</code> expression, but
+Motoko simplifies the handling of option types with some dedicated syntax: <em>option blocks</em> and <em>null breaks</em>.</p>
+</div>
+<div class="paragraph">
+<p>The option block, <code>do ? &lt;block&gt;</code>, produces a value of type <code>?T</code>, when block <code>&lt;block&gt;</code> has type <code>T</code> and, importantly, introduces the possibility of a break from <code>&lt;block&gt;</code>.
+Within a <code>do ? &lt;block&gt;</code>, the null break <code>&lt;exp&gt; !</code>, tests whether the result of the expression, '&lt;exp&gt;', of unrelated option type, <code>?U</code>, is <code>null</code>.
+If the result <code>&lt;exp&gt;</code> is <code>null</code>, control immediately exits the <code>do ? &lt;block&gt;</code> with value <code>null</code>.
+Otherwise, the result of <code>&lt;exp&gt;</code> must be an option value <code>?v</code>, and evaluation of <code>&lt;exp&gt; !</code> proceeds with its contents, <code>v</code> (of type <code>U</code>).</p>
+</div>
+<div class="paragraph">
+<p>As realistic example, we give the definition of a simple function `eval`uating numeric `Exp`ressions built from natural numbers, division and a zero test, encoded as a variant type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Exp = {
+  #Lit : Nat;
+  #Div : (Exp, Exp);
+  #IfZero : (Exp, Exp, Exp);
+};
+
+func eval(e : Exp) : ? Nat {
+  do ? {
+    switch e {
+      case (#Lit n) { n };
+      case (#Div (e1, e2)) {
+        let v1 = eval e1 !;
+        let v2 = eval e2 !;
+        if (v2 == 0)
+          null !
+        else v1 / v2
+      };
+      case (#IfZero (e1, e2, e3)) {
+        if (eval e1 ! == 0)
+          eval e2 !
+        else
+          eval e3 !
+      };
+    };
+  };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To guard against division by <code>0</code> without trapping, the <code>eval</code> function returns an option result, using <code>null</code> to indicate failure.</p>
+</div>
+<div class="paragraph">
+<p>Each recursive call is checked for <code>null</code> using <code>!</code>, immediately exiting the outer <code>do ? block</code>, and thus the function itself, with <code>null</code>, when a result is <code>null</code>.</p>
+</div>
+<div class="paragraph">
+<p>(As an exercise that illustrates the concision of option blocks, you might want to try rewriting <code>eval</code> using a labeled expression and explicit switches for each null break.)</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="repetition-loop"><a class="anchor" href="#repetition-loop"></a>Repetition with <code>loop</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The simplest way to indefinitely repeat a sequence of imperative expressions is by using a <code>loop</code> construct</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">loop { ⟨expr1⟩; ⟨expr2⟩; ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The loop can only be abandoned with a <code>return</code> or <code>break</code> construct.</p>
+</div>
+<div class="paragraph">
+<p>A re-entry condition can be affixed to allow a conditional repetition of the loop with <code>loop ⟨body⟩ while ⟨cond⟩</code>.</p>
+</div>
+<div class="paragraph">
+<p>The body of such a loop is always executed at least once.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="while-loops"><a class="anchor" href="#while-loops"></a><code>while</code> loops with precondition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes an entry condition is needed to guard the first execution of a loop. For this kind of repetition the <code>while ⟨cond⟩ ⟨body⟩</code>-flavor is available</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">while (earned &lt; need) { earned += earn() };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike a <code>loop</code>, the body of a <code>while</code> loop may never be executed.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="for-loops"><a class="anchor" href="#for-loops"></a><code>for</code> loops for iteration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An iteration over elements of some homogeneous collection can be performed using a <code>for</code> loop. The values are drawn from an iterator and bound to the loop pattern in turn.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let carsInStock = [
+  ("Buick", 2020, 23.000),
+  ("Toyota", 2019, 17.500),
+  ("Audi", 2020, 34.900)
+];
+var inventory : { var value : Float } = { var value = 0.0 };
+for ((model, year, price) in carsInStock.vals()) {
+  inventory.value += price;
+};
+inventory</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="intro-range"><a class="anchor" href="#intro-range"></a>Using <code>range</code> with a <code>for</code> loop</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>range</code> function produces an iterator (of type <code>Iter&lt;Nat&gt;</code>) with the given lower and upper bound, inclusive.</p>
+</div>
+<div class="paragraph">
+<p>The following loop example prints the numbers <code>0</code> through <code>10</code> over its <em>eleven</em> iterations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Iter "mo:base/Iter";
+import Debug "mo:base/Debug";
+var i = 0;
+for (j in Iter.range(0, 10)) {
+  Debug.print(debug_show(j));
+  assert(j == i);
+  i += 1;
+};
+assert(i == 11);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More generally, the function <code>range</code> is a <code>class</code> that constructs iterators over sequences of natural numbers.  Each such iterator has type <code>Iter&lt;Nat&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>As a constructor function, <code>range</code> has a function type:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">(lower : Nat, upper : Int) -&gt; Iter&lt;Nat&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <code>Iter&lt;Nat&gt;</code> is an iterator object type with a <code>next</code> method that produces optional elements, each of type <code>?Nat</code>:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Iter&lt;A&gt; = {next : () -&gt; ?A};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For each invocation, <code>next</code> returns an optional element (of type
+<code>?Nat</code>).</p>
+</div>
+<div class="paragraph">
+<p>The value <code>null</code> indicates that the iteration sequence has terminated.</p>
+</div>
+<div class="paragraph">
+<p>Until reaching <code>null</code>, each non-<code>null</code> value, of the form <code>?</code><em>n</em> for some number <em>n</em>, contains the next successive element in the iteration sequence.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="intro-revrange"><a class="anchor" href="#intro-revrange"></a>Using <code>revRange</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like <code>range</code>, the function <code>revRange</code> is a <code>class</code> that constructs iterators (each of type <code>Iter&lt;Int&gt;</code>).
+As a constructor function, it has a function type:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">(upper : Int, lower : Int) -&gt; Iter&lt;Int&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike <code>range</code>, the <code>revRange</code> function <em>descends</em> in its iteration sequence, from an initial <em>upper</em> bound to a final <em>lower</em> bound.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="other-iterators"><a class="anchor" href="#other-iterators"></a>Using iterators of specific data structures</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many built-in data structures come with pre-defined iterators. Below table lists them</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Iterators for data structures</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Iterator</th>
+<th class="tableblock halign-left valign-top">Elements</th>
+<th class="tableblock halign-left valign-top">Element type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[T]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">array of <code>T</code>&#8203;s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the array&#8217;s members</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>T</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[T]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">array of <code>T</code>&#8203;s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>keys</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the array&#8217;s valid indices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Nat</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[var T]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mutable array of <code>T</code>&#8203;s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the array&#8217;s members</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>T</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[var T]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mutable array of <code>T</code>&#8203;s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>keys</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the array&#8217;s valid indices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Nat</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Text</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chars</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the text&#8217;s characters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Char</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Blob</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">blob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the blob&#8217;s bytes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Nat8</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>User-defined data structures can define their own iterators. As long they conform with the <code>Iter&lt;A&gt;</code> type for some element type <code>A</code>, these behave like the built-in ones and can be consumed with ordinary <code>for</code>-loops.</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar">
+  
+  <div class="toc-menu"></div>
+</aside></div>
+</main></div>
+<footer class="footer">
+  <div class="footer-container">
+    <a href="http://www.dfinity.org"><img class="footer-logo" src="../../_/img/logo.svg"></a>
+    <nav class="footer-nav">
+      <div class="col1">
+        <h5 class="footer-header">Developers</h5>
+        <a class="footer-link" href="http://www.dfinity.org/faq">
+          FAQ
+        </a>
+        <a class="footer-link" href="#">
+          Developers
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/data-centers">
+          Data Centers
+        </a>
+      </div>
+
+      <div class="col2">
+        <h5 class="footer-header">Team</h5>
+        <a class="footer-link" href="http://www.dfinity.org/foundation">
+          Foundation
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/foundation#events">
+          Events
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/careers">
+          Careers
+        </a>
+      </div>
+
+
+      <div class="col3">
+        <h5 class="footer-header">Media</h5>
+        <a class="footer-link" href="http://www.dfinity.org/media">
+          Featured Videos
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/media#featured-stories">
+          Featured Stories
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/newsletter">
+          Newsletter
+        </a>
+      </div>
+
+      <div class="social-icons">
+
+        <a class="social-icon-link" target="blank" href="https://github.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 0C5.3625 0 0 5.3625 0 12C0 17.2875 3.45 21.7875 8.2125 23.4C8.8125 23.5125 9.0375 23.1375 9.0375 22.8375C9.0375 22.5375 9.0375 21.7875 9.0375 20.8125C5.7 21.525 4.9875 19.2 4.9875 19.2C4.425 17.8125 3.6375 17.4375 3.6375 17.4375C2.55 16.6875 3.7125 16.725 3.7125 16.725C4.9125 16.8 5.55 17.9625 5.55 17.9625C6.6375 19.8 8.3625 19.275 9.0375 18.975C9.15 18.1875 9.45 17.6625 9.7875 17.3625C7.125 17.0625 4.3125 16.0125 4.3125 11.4375C4.3125 10.125 4.7625 9.075 5.55 8.2125C5.4375 7.9125 5.025 6.675 5.6625 5.025C5.6625 5.025 6.675 4.6875 8.9625 6.2625C9.9375 6 10.95 5.85 11.9625 5.85C12.975 5.85 14.025 6 14.9625 6.2625C17.25 4.725 18.2625 5.025 18.2625 5.025C18.9 6.675 18.4875 7.9125 18.375 8.2125C19.1625 9.0375 19.6125 10.125 19.6125 11.4375C19.6125 16.05 16.8 17.0625 14.1375 17.3625C14.55 17.7375 14.9625 18.45 14.9625 19.575C14.9625 21.1875 14.9625 22.4625 14.9625 22.875C14.9625 23.2125 15.1875 23.5875 15.7875 23.4375C20.55 21.7875 24 17.2875 24 12C24 5.3625 18.6375 0 12 0Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://medium.com/dfinity-network-blog">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22.3125 1H1.6875C1.50516 1 1.3303 1.07243 1.20136 1.20136C1.07243 1.3303 1 1.50516 1 1.6875L1 22.3125C1 22.4948 1.07243 22.6697 1.20136 22.7986C1.3303 22.9276 1.50516 23 1.6875 23H22.3125C22.4948 23 22.6697 22.9276 22.7986 22.7986C22.9276 22.6697 23 22.4948 23 22.3125V1.6875C23 1.50516 22.9276 1.3303 22.7986 1.20136C22.6697 1.07243 22.4948 1 22.3125 1V1ZM19.2768 6.21228L18.0971 7.34356C18.0471 7.38153 18.0085 7.43245 17.9854 7.4908C17.9623 7.54916 17.9557 7.61272 17.9661 7.67459V15.9875C17.9557 16.0494 17.9623 16.1129 17.9854 16.1713C18.0085 16.2296 18.0471 16.2806 18.0971 16.3185L19.2493 17.4498V17.698H13.4534V17.4498L14.6469 16.2903C14.7641 16.1731 14.7641 16.1388 14.7641 15.9593V9.24072L11.4455 17.6698H10.9987L7.13319 9.24072V14.8899C7.11729 15.0071 7.12828 15.1264 7.16533 15.2387C7.20237 15.351 7.2645 15.4535 7.347 15.5382L8.89937 17.4213V17.6695H4.49731V17.4213L6.04969 15.5382C6.13152 15.4534 6.19226 15.3505 6.22701 15.2379C6.26177 15.1253 6.26956 15.0061 6.24975 14.8899V8.35866C6.25855 8.26945 6.24627 8.17943 6.21391 8.09584C6.18155 8.01225 6.13001 7.93743 6.06344 7.87741L4.68362 6.21503V5.96684H8.96847L12.2805 13.2303L15.1924 5.96684H19.2768V6.21228Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://twitter.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23 5.33654C22.175 5.67308 21.3156 5.94231 20.4219 6.04327C21.35 5.50481 22.0719 4.62981 22.4156 3.58654C21.5562 4.09135 20.5938 4.46154 19.5625 4.66346C18.7031 3.78846 17.5344 3.25 16.2281 3.25C13.7187 3.25 11.725 5.23558 11.725 7.65865C11.725 7.99519 11.7594 8.33173 11.8281 8.66827C8.08125 8.5 4.74688 6.71635 2.54688 4.05769C2.16875 4.69712 1.92813 5.47115 1.92813 6.27885C1.92813 7.82692 2.71875 9.17308 3.92188 9.94712C3.16562 9.91346 2.47812 9.71154 1.89375 9.40865C1.89375 9.44231 1.89375 9.44231 1.89375 9.47596C1.89375 11.6298 3.44063 13.4135 5.50313 13.8173C5.125 13.9183 4.7125 13.9856 4.3 13.9856C4.025 13.9856 3.71562 13.9519 3.44062 13.9183C4.025 15.6683 5.675 16.9471 7.66875 16.9808C6.12187 18.1587 4.1625 18.8654 2.06562 18.8654C1.6875 18.8654 1.34375 18.8317 1 18.7981C2.99375 20.0096 5.36563 20.75 7.90938 20.75C16.2281 20.75 20.7656 14.0192 20.7656 8.16346C20.7656 7.96154 20.7656 7.79327 20.7656 7.59135C21.625 6.98558 22.3813 6.21154 23 5.33654Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://forum.dfinity.org/">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12.0932 1C6.0727 1 1 5.83706 1 11.8085C1 12 1.00488 23 1.00488 23L12.0933 22.9901C18.1188 22.9901 23 17.9666 23 11.9951C23 6.02373 18.1188 1 12.0932 1ZM12 18.2857C11.0473 18.2857 10.1388 18.0745 9.32853 17.6916L5.34597 18.6786L6.47047 14.9956C5.98926 14.1067 5.71423 13.0853 5.71423 12C5.71423 8.52815 8.52811 5.71428 12 5.71428C15.4719 5.71428 18.2857 8.52815 18.2857 12C18.2857 15.472 15.4719 18.2857 12 18.2857Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://www.linkedin.com/company/dfinity'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M1 4.35878C1 3.01688 2.03589 2 3.61924 2C5.20139 2 6.17406 3.01448 6.20507 4.35519C6.20507 5.67205 5.20139 6.71456 3.58942 6.71456H3.55841C2.00666 6.71456 1 5.67562 1 4.35878ZM17.5581 8.28158C15.1017 8.28158 13.5625 9.61217 13.278 10.5449V8.41225H8.46122C8.52324 9.54475 8.46122 21.9995 8.46122 21.9995H13.278V14.647C13.278 14.5987 13.2778 14.5505 13.2775 14.5025C13.2756 14.1436 13.2736 13.7952 13.383 13.5365C13.714 12.7194 14.4255 11.8719 15.7046 11.8719C17.3775 11.8719 18.1378 13.128 18.1378 14.9685V21.9995H23V14.4448C23 10.236 20.6056 8.28158 17.5581 8.28158ZM1.55371 8.41275H5.84157V22H1.55371V8.41275Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://youtube.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23.775 7.6375C23.775 7.6375 23.55 5.9875 22.8375 5.2375C21.9375 4.3 20.8875 4.2625 20.4375 4.225C17.025 4 12 4 12 4C12 4 6.975 4 3.6 4.225C3.1125 4.2625 2.1 4.3 1.2 5.2375C0.4875 5.95 0.2625 7.6375 0.2625 7.6375C0.2625 7.6375 0 9.5875 0 11.5375V13.375C0 15.325 0.225 17.275 0.225 17.275C0.225 17.275 0.45 18.925 1.1625 19.675C2.0625 20.6125 3.2625 20.6125 3.825 20.6875C5.7375 20.875 12 20.9125 12 20.9125C12 20.9125 17.025 20.9125 20.4 20.65C20.8875 20.6125 21.9 20.575 22.8 19.6375C23.5125 18.925 23.7375 17.2375 23.7375 17.2375C23.7375 17.2375 24 15.2875 24 13.3375V11.5C24 9.5875 23.775 7.6375 23.775 7.6375ZM9.525 15.55V8.8L16.0125 12.175L9.525 15.55Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+      </div>
+    </nav>
+
+    <div class="legal-container">
+      <span class="legal" id="year">
+        © 2020 DFINITY
+      </span>
+      <a class="legal footer-link" href="http://www.dfinity.org/terms-of-use">
+        Terms of Use
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/cookie-policy">
+        Cookie Policy
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/privacy-policy">
+        Privacy Policy
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  var today = new Date();
+  var year = today.getFullYear();
+  document.getElementById("year").innerHTML = `© ${year} DFINITY`;
+</script><script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+    apiKey: 'b93d56cc4b00b0afbcdaacab04dcf25b',
+    indexName: 'dfinity_sdk',
+    inputSelector: '.search-input',
+    debug: false // Set debug to true if you want to inspect the dropdown
+  });
+</script>
+
+<!-- Start of dfinity Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=53121947-c10a-484c-b99b-f89a9fb6f63e"> </script>
+<!-- End of dfinity Zendesk Widget script -->
+
+<script src="../../_/js/vendor/run_repl.js"></script>
+<script type="module">
+  import {CodeJar} from 'https://cdn.jsdelivr.net/npm/codejar@3.2.3/codejar.min.js';
+  import {withLineNumbers} from 'https://cdn.jsdelivr.net/npm/codejar@3.2.3/linenumbers.js';
+  window.CodeJar = CodeJar;
+  window.withLineNumbers = withLineNumbers;
+</script> 
+<script type="text/javascript">
+async function addPackage(name, repo, version, dir) {
+  const meta_url = `../../_/js/vendor/${repo}/flat`;
+  const base_url = `../../_/js/vendor/${repo}`;
+  const response = await fetch(meta_url);
+  const json = await response.json()
+  const promises = [];
+  const fetchedFiles = [];
+  for (const f of json.files) {
+    if (f.name.startsWith(`/${dir}/`) && /\.mo$/.test(f.name)) {
+      const promise = (async () => {
+        const content = await (await fetch(base_url + f.name)).text();
+        const stripped = name + f.name.slice(dir.length + 1);
+        fetchedFiles.push(stripped);
+        Motoko.saveFile(stripped, content);
+      })();
+      promises.push(promise);
+    }
+  }
+  Promise.all(promises).then(() => {
+    Motoko.addPackage(name, name + '/');
+    console.log("base library loaded");
+    changeCodeBlock(); // from run_repl.js
+  });
+}
+function loadBase() {
+  addPackage('base', 'dfinity/motoko-base', 'moc-0.6.27', 'src');
+}
+</script>
+<script async src="../../_/js/vendor/moc.js" onload="loadBase()">
+</script>
+  </body>
+</html>

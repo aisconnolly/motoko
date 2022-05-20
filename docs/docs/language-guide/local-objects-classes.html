@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Local objects and classes :: Motoko documentation</title>
+    <meta name="generator" content="Antora 2.3.4">
+<link rel="stylesheet" href="../../_/css/site.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" /><meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:title" content="The Internet Computer | Documentation" />
+<meta property="og:description" content="Documentation for the internet computer." />
+<meta property="og:image" content="../../_/img/share.jpg" />
+<meta property="og:image:url" content="../../_/img/share.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@DFINITYDev" />
+<meta name="twitter:image" content="../../_/img/logo-RGB.png" />
+<meta name="twitter:image:alt" content="DFINITY Logo" />    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="logo-container" href="https://dfinity.org/">
+        <img class="header-logo" src="../../_/img/logo.svg">
+        <h1 class="header-title">Motoko documentation</h1>
+      </a>
+    </div>
+    <div class="nav-items-wrapper">
+      <div class="search-container">
+  <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M11.8654 12.5892C10.8213 13.4695 9.47259 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8C14 9.47209 13.4699 10.8204 12.5901 11.8643L17.3625 16.6367L16.6377 17.3615L11.8654 12.5892ZM12.9333 8C12.9333 10.7246 10.7246 12.9333 8 12.9333C5.2754 12.9333 3.06667 10.7246 3.06667 8C3.06667 5.2754 5.2754 3.06667 8 3.06667C10.7246 3.06667 12.9333 5.2754 12.9333 8Z"
+      fill="black" />
+  </svg>
+
+
+  <input class="search-input" placeholder="Search" type="search" />
+</div>      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div id="topbar-nav" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" target="blank" href="https://forum.dfinity.org/">Forum</a>
+          <a class="navbar-item" target="blank" href="mailto:support@dfinity.org?subject=Feedback - SDK Developer Center">Email us</a>
+          <a class="navbar-item" target="blank" href="https://www.twitter.com/dfinitydev">
+            <img src="../../_/img/social/twitter-icon.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="file:///build/doc/modules/language-guide/pages/local-objects-classes.adoc"><svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a></div>
+</div>
+<div class="main-content">
+<article class="doc">
+<h1 class="page">Local objects and classes</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Motoko, an <code>object</code> may encapsulate local state (<code>var</code>-bound variables) by packaging this state with <code>public</code> methods that access and update it.</p>
+</div>
+<div class="paragraph">
+<p>As in other typed languages, Motoko programs benefit from the ability to encapsulate state as objects with abstract types.</p>
+</div>
+<div class="paragraph">
+<p>However, Motoko objects that include mutable state are <em>not shareable</em>, and this is a critical security-oriented design decision.</p>
+</div>
+<div class="paragraph">
+<p>If they were shareable, that would mean either conceptually moving a mobile object&#8217;s code among actors and executing it remotely, a security risk, or sharing state with remote logic, another security risk.  (Notably, as a subcase, objects may be pure records and those <em>are</em> shareable, since they are free from mutable state.)</p>
+</div>
+<div class="paragraph">
+<p>To compensate for this necessary limitation, <code>actor</code> objects <em>are shareable</em>, but always execute remotely.
+They communicate with shareable Motoko data only.
+Local objects interact in less restricted ways with themselves, and can pass any Motoko data to each other&#8217;s methods, including other objects.
+In most other ways, local objects (and classes) are non-shareable counterparts to actor objects (and classes).</p>
+</div>
+<div class="paragraph">
+<p>The <a href="mutable-state.html">Mutable state</a> introduced declarations of private mutable state, in the form of <code>var</code>-bound variables and (mutable) array allocation.
+In this chapter, we use mutable state to implement simple objects, much like how we would implement simple objects in object-oriented programming.</p>
+</div>
+<div class="paragraph">
+<p>We illustrate this support via a running example, which continues in the next chapter.
+The following example illustrates a general evolution path for Motoko programs.
+Each <em>object</em>, if important enough, has the potential to be refactored into an Internet <em>service</em>, by refactoring this <em>(local) object</em> into an <em>actor object</em>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Object classes</strong>. Frequently, one needs <em>a family</em> of related objects to perform a task.
+When objects exhibit similar behavior, it makes sense to fabricate them according to the same blueprint,
+but with customizable initial state.
+To this end, Motoko provides a syntactical construct, called a <code>class</code> definition,
+which simplifies building objects of the same type and implementation.
+We introduce these after discussing objects.</p>
+</div>
+<div class="paragraph">
+<p><strong>Actor classes</strong>.
+When an object class exposes a <em><a href="actors-async.adoc">service</a></em> (asynchronous behavior), the corresponding Motoko construct is an <a href="actors-async.adoc">actor class</a>, which follows a similar (but distinct) design.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_the_counter_object"><a class="anchor" href="#_example_the_counter_object"></a>Example: The <code>counter</code> object</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consider the following <em>object declaration</em> of the object value <code>counter</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">object counter {
+  var count = 0;
+  public func inc() { count += 1 };
+  public func read() : Nat { count };
+  public func bump() : Nat {
+    inc();
+    read()
+  };
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This declaration introduces a single object instance named <code>counter</code>, whose entire implementation is given above.</p>
+</div>
+<div class="paragraph">
+<p>In this example, the developer exposes three <em>public</em> functions <code>inc</code>, <code>read</code> and <code>bump</code> using keyword <code>public</code> to declare each in the object body.
+The body of the object, like a block expression, consists of a list of declarations.</p>
+</div>
+<div class="paragraph">
+<p>In addition to these three functions, the object has one (private) mutable variable <code>count</code>, which holds the current count, initially zero.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_object_types"><a class="anchor" href="#_object_types"></a>Object types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This object <code>counter</code> has the following <em>object type</em>, written as a list of field-type pairs, enclosed in braces (<code>{</code> and <code>}</code>):</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{
+  inc  : () -&gt; () ;
+  read : () -&gt; Nat ;
+  bump : () -&gt; Nat ;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each field type consists of an identifier, a colon <code>:</code>, and a type for the field content.  Here, each field is a function, and thus has an <em>arrow</em> type form (<code>_ &#8594; _</code>).</p>
+</div>
+<div class="paragraph">
+<p>In the declaration of <code>object</code>, the variable <code>count</code> was explicitly declared neither as <code>public</code> nor as <code>private</code>.</p>
+</div>
+<div class="paragraph">
+<p>By default, all declarations in an object block are <code>private</code>, as is <code>count</code> here.
+Consequently, the type for <code>count</code> does not appear in the type of the object, <em>and</em> its name and presence are both inaccessible from the outside.</p>
+</div>
+<div class="paragraph">
+<p>The inaccessibility of this field comes with a powerful benefit:
+By not exposing this implementation detail, the object has a <em>more general</em> type (fewer fields), and as a result, is interchangeable with objects that implement the same counter object type differently, without using such a field.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_the_bytecounter_object"><a class="anchor" href="#_example_the_bytecounter_object"></a>Example: The <code>byteCounter</code> object</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To illustrate the point just above, consider this variation of the <code>counter</code> declaration above, of <code>byteCounter</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Nat8 "mo:base/Nat8";
+object byteCounter {
+  var count : Nat8 = 0;
+  public func inc() { count += 1 };
+  public func read() : Nat { Nat8.toNat(count) };
+  public func bump() : Nat { inc(); read() };
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This object has the same type as the previous one, and thus from the standpoint of type checking, this object is interchangeable with the prior one:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{
+  inc  : () -&gt; () ;
+  read : () -&gt; Nat ;
+  bump : () -&gt; Nat ;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike the first version, however, this version does not use the same implementation of the counter field.
+Rather than use an ordinary natural <code>Nat</code> that never overflows, but may also grow without bound, this version uses a byte-sized natural number (type <code>Nat8</code>) whose size is always eight bits.</p>
+</div>
+<div class="paragraph">
+<p>As such, the <code>inc</code> operation may fail with an overflow for this object, but never the prior one, which may instead (eventually) fill the program&#8217;s memory, a different kind of application failure.</p>
+</div>
+<div class="paragraph">
+<p>Neither implementation of a counter comes without some complexity, but in this case, they share a common type.</p>
+</div>
+<div class="paragraph">
+<p>In general, a common type shared among two implementations (of an object or service) affords the potential for the internal implementation complexity to be factored away from the rest of the application that uses it.
+Here, the common type abstracts over the simple choice of a number&#8217;s representation.
+In general, the implementation choices would each be more complex, and more interesting.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_object_subtyping"><a class="anchor" href="#_object_subtyping"></a>Object subtyping</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To illustrate the role and use of object subtyping in Motoko, consider implementing a simpler counter with a more general type (fewer public operations):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">object bumpCounter {
+  var c = 0;
+  public func bump() : Nat {
+    c += 1;
+    c
+  };
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The object <code>bumpCounter</code> has the following object type, exposing exactly one operation, <code>bump</code>:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{
+  bump : () -&gt; Nat ;
+ }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This type exposes the most common operation, and one that only permits certain behavior.
+For instance, the counter can only ever increase, and can never decrease or be set to an arbitrary value.</p>
+</div>
+<div class="paragraph">
+<p>In other parts of a system, we may in fact implement and use a <em>less general</em> version, with <em>more</em> operations:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">fullCounter : {
+  inc   : () -&gt; () ;
+  read  : () -&gt; Nat ;
+  bump  : () -&gt; Nat ;
+  write : Nat -&gt; () ;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we consider a counter named <code>fullCounter</code> with a less general type than any given above.
+In addition to <code>inc</code>, <code>read</code> and <code>bump</code>, it additionally includes <code>write</code>, which permits the caller to change the current count value to an arbitrary one, such as back to <code>0</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Object subtyping.</strong> In Motoko, objects have types that may
+  relate by subtyping, as the various types of counters do above.  As
+  is standard, types with <em>more fields</em> are <em>less general</em> (are <em><strong>sub</strong>types</em>
+  of) types with <em>fewer fields</em>.  For instance, we can summarize the
+  types given in the examples above as being related in the following
+  subtyping order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Most general:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{ bump : () -&gt; Nat }</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Middle generality:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{
+  inc  : () -&gt; () ;
+  read : () -&gt; Nat ;
+  bump : () -&gt; Nat ;
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Least generality:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{
+  inc  : () -&gt; () ;
+  read : () -&gt; Nat ;
+  bump : () -&gt; Nat ;
+  write : Nat -&gt; () ;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a function expects to receive an object of the first type (<code>{ bump: () &#8594; Nat }</code>), <em>any</em> of the types given above will suffice, since they are each equal to, or a subtype of, this (most general) type.</p>
+</div>
+<div class="paragraph">
+<p>However, if a function expects to receive an object of the last, least general type, the other two will <em>not</em> suffice, since they each lack the needed <code>write</code> operation, to which this function rightfully expects to have access.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_object_classes"><a class="anchor" href="#_object_classes"></a>Object classes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Motoko, an object encapsulates state, and an object <code>class</code> is
+a package of two entities that share a common name.</p>
+</div>
+<div class="paragraph">
+<p>Consider this example <code>class</code> for counters that start at zero:</p>
+</div>
+<div id="counter" class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Counter() {
+  var c = 0;
+  public func inc() : Nat {
+    c += 1;
+    return c;
+  }
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The value of this definition is that we can <em>construct</em> new counters,
+each starting with their own unique state, initially at zero:</p>
+</div>
+<div id="cinit" class="listingblock include_counter">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let c1 = Counter();
+let c2 = Counter();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each is independent:</p>
+</div>
+<div class="listingblock include_counter_cinit">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let x = c1.inc();
+let y = c2.inc();
+(x, y)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We could achieve the same results by writing a function that returns an object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func Counter() : { inc : () -&gt; Nat } =
+  object {
+    var c = 0;
+    public func inc() : Nat { c += 1; c }
+  };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the return type of this <em>constructor function</em> (an object type):</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">{ inc : () -&gt; Nat }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We may want to name this type, for example, <code>Counter</code>, as follows, for use in further type declarations:</p>
+</div>
+<div class="listingblock no-repl">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Counter = { inc : () -&gt; Nat };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In fact, the <code>class</code> keyword syntax shown above is nothing but a shorthand for these two definitions for <code>Counter</code>: a factory function <code>Counter</code> that constructs objects, and the type <code>Counter</code> of these objects. Classes do not provide any new functionality beyond this convenience.</p>
+</div>
+<div class="sect2">
+<h3 id="_class_constructor"><a class="anchor" href="#_class_constructor"></a>Class constructor</h3>
+<div class="paragraph">
+<p>An object class defines a constructor function that may carry zero or more data arguments and zero or more type arguments.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Counter</code> example above has zero of each.</p>
+</div>
+<div class="paragraph">
+<p>The type arguments, if any, parameterize both the type and the constructor function for the class.</p>
+</div>
+<div class="paragraph">
+<p>The data arguments, if any, parameterize (only) the constructor function for the class.</p>
+</div>
+<div class="sect3">
+<h4 id="_data_arguments"><a class="anchor" href="#_data_arguments"></a>Data arguments</h4>
+<div class="paragraph">
+<p>Suppose we want to initialize the counter with some non-zero value.  We can supply that value as a data argument to the <code>class</code> constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Counter(init : Nat) {
+  var c = init;
+  public func inc() : Nat { c += 1; c };
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This parameter is available to all methods.</p>
+</div>
+<div class="paragraph">
+<p>For instance, we can <code>reset</code> the <code>Counter</code> to its initial value, a parameter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Counter(init : Nat) {
+  var c = init;
+  public func inc() : Nat { c += 1; c };
+  public func reset() { c := init };
+};</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_type_arguments"><a class="anchor" href="#_type_arguments"></a>Type arguments</h4>
+<div class="paragraph">
+<p>Suppose we want the counter to actually carry data that it counts (like a specialized <code>Buffer</code>).</p>
+</div>
+<div class="paragraph">
+<p>When classes use or contain data of arbitrary type, they carry a type
+argument (or equivalently, <em>type parameter</em>) for that unknown type, just as with functions.</p>
+</div>
+<div class="paragraph">
+<p>The scope of this type parameter covers the entire <code>class</code>, just as with data parameters.
+As such, the methods of the class can use (and <em>need not re-introduce</em>) these type parameters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Buffer "mo:base/Buffer";
+
+class Counter&lt;X&gt;(init : Buffer.Buffer&lt;X&gt;) {
+  var buffer = init.clone();
+  public func add(x : X) : Nat {
+    buffer.add(x);
+    buffer.size()
+  };
+
+  public func reset() {
+    buffer := init.clone()
+  };
+};</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_type_annotation"><a class="anchor" href="#_type_annotation"></a>Type annotation</h4>
+<div class="paragraph">
+<p>Optionally, the class constructor may also carry a type annotation for its "return type" (the type of objects that it produces).
+When supplied, Motoko checks that this type annotation is compatible with the body of the class (an object definition).
+This check ensures that each object produced by the constructor meets the supplied specification.</p>
+</div>
+<div class="paragraph">
+<p>For example, we repeat the <code>Counter</code> as a buffer, and annotate it with
+a more general type <code>Accum&lt;X&gt;</code> that permits adding, but not resetting
+the counter. This annotation ensures that the objects are compatible
+with the type <code>Accum&lt;X&gt;</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">import Buffer "mo:base/Buffer";
+
+type Accum&lt;X&gt; = { add : X -&gt; Nat };
+
+class Counter&lt;X&gt;(init : Buffer.Buffer&lt;X&gt;) : Accum&lt;X&gt; {
+  var buffer = init.clone();
+  public func add(x : X) : Nat { buffer.add(x); buffer.size() };
+  public func reset() { buffer := init.clone() };
+};</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_full_syntax"><a class="anchor" href="#_full_syntax"></a>Full syntax</h4>
+<div class="paragraph">
+<p>In full, classes are defined by the keyword <code>class</code>, followed by:
+ - a name for the constructor and type being defined (for example, <code>Counter</code>)
+ - optional type arguments (for example, omitted, or <code>&lt;X&gt;</code>, or <code>&lt;X, Y&gt;</code>)
+ - an argument list (for example, <code>()</code>, or <code>(init : Nat)</code>, etc.)
+ - an optional type annotation for the constructed objects (for example, omitted, or <code>Accum&lt;X&gt;</code>),
+ - the class "body" is an object definition, parameterized by the type and value arguments (if any).</p>
+</div>
+<div class="paragraph">
+<p>The constituents of the body marked <code>public</code> contribute to the resulting objects' type and these types compared against the (optional) annotation, if given.</p>
+</div>
+<div class="sect4">
+<h5 id="_another_example_bits"><a class="anchor" href="#_another_example_bits"></a>Another example: <code>Bits</code></h5>
+<div class="paragraph">
+<p>As another example, let&#8217;s consider the task of walking the bits of a natural number (type <code>Nat</code>). For this example, we could define the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Bits(n : Nat) {
+  var state = n;
+  public func next() : ?Bool {
+    if (state == 0) { return null };
+    let prev = state;
+    state /= 2;
+    ?(state * 2 != prev)
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above class definition is equivalent to the simultaneous definition of a structural type synonym and a factory function, both named <code>Bits</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Bits = {next : () -&gt; ?Bool}
+let Bits : Nat -&gt; Bits =
+func Bits(n : Nat) : Bits = object {
+  // class body
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_structural_subtyping"><a class="anchor" href="#_structural_subtyping"></a>Structural subtyping</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Object subtyping in Motoko uses <em>structural subtyping</em>, not <em>nominal subtyping</em>.</p>
+</div>
+<div class="paragraph">
+<p>Recall that in nominal typing, the question of two types equality depends on choosing consistent, globally-unique type names (across projects and time).</p>
+</div>
+<div class="paragraph">
+<p>In Motoko, the question of two types' equality is based on their <em>structure</em>, not their names.</p>
+</div>
+<div class="paragraph">
+<p>Due to structural typing, naming the class type provides a convenient abbreviation.</p>
+</div>
+<div class="paragraph">
+<p>For typing purposes, however, all that matters is the <em>structure</em> of the corresponding object type: two classes with different names but equivalent definitions produce type-compatible objects.</p>
+</div>
+<div class="paragraph">
+<p>When the optional type annotation is supplied in a class declaration, conformance is checked: the object type must be a subtype of the annotation. The annotation does not affect the type of the class, however, even if it only describes a proper super-type of the object type.</p>
+</div>
+<div class="paragraph">
+<p>Formally, subtyping relationships in Motoko extend to all types, not just object types.</p>
+</div>
+<div class="paragraph">
+<p>Most cases are standard, and follow conventional programming language theory (for <em>structural</em> subtyping, specifically).</p>
+</div>
+<div class="paragraph">
+<p>Other notable cases in Motoko for new programmers include
+array, options, variants and number type inter-relationships.</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar">
+  
+  <div class="toc-menu"></div>
+</aside></div>
+</main></div>
+<footer class="footer">
+  <div class="footer-container">
+    <a href="http://www.dfinity.org"><img class="footer-logo" src="../../_/img/logo.svg"></a>
+    <nav class="footer-nav">
+      <div class="col1">
+        <h5 class="footer-header">Developers</h5>
+        <a class="footer-link" href="http://www.dfinity.org/faq">
+          FAQ
+        </a>
+        <a class="footer-link" href="#">
+          Developers
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/data-centers">
+          Data Centers
+        </a>
+      </div>
+
+      <div class="col2">
+        <h5 class="footer-header">Team</h5>
+        <a class="footer-link" href="http://www.dfinity.org/foundation">
+          Foundation
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/foundation#events">
+          Events
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/careers">
+          Careers
+        </a>
+      </div>
+
+
+      <div class="col3">
+        <h5 class="footer-header">Media</h5>
+        <a class="footer-link" href="http://www.dfinity.org/media">
+          Featured Videos
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/media#featured-stories">
+          Featured Stories
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/newsletter">
+          Newsletter
+        </a>
+      </div>
+
+      <div class="social-icons">
+
+        <a class="social-icon-link" target="blank" href="https://github.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 0C5.3625 0 0 5.3625 0 12C0 17.2875 3.45 21.7875 8.2125 23.4C8.8125 23.5125 9.0375 23.1375 9.0375 22.8375C9.0375 22.5375 9.0375 21.7875 9.0375 20.8125C5.7 21.525 4.9875 19.2 4.9875 19.2C4.425 17.8125 3.6375 17.4375 3.6375 17.4375C2.55 16.6875 3.7125 16.725 3.7125 16.725C4.9125 16.8 5.55 17.9625 5.55 17.9625C6.6375 19.8 8.3625 19.275 9.0375 18.975C9.15 18.1875 9.45 17.6625 9.7875 17.3625C7.125 17.0625 4.3125 16.0125 4.3125 11.4375C4.3125 10.125 4.7625 9.075 5.55 8.2125C5.4375 7.9125 5.025 6.675 5.6625 5.025C5.6625 5.025 6.675 4.6875 8.9625 6.2625C9.9375 6 10.95 5.85 11.9625 5.85C12.975 5.85 14.025 6 14.9625 6.2625C17.25 4.725 18.2625 5.025 18.2625 5.025C18.9 6.675 18.4875 7.9125 18.375 8.2125C19.1625 9.0375 19.6125 10.125 19.6125 11.4375C19.6125 16.05 16.8 17.0625 14.1375 17.3625C14.55 17.7375 14.9625 18.45 14.9625 19.575C14.9625 21.1875 14.9625 22.4625 14.9625 22.875C14.9625 23.2125 15.1875 23.5875 15.7875 23.4375C20.55 21.7875 24 17.2875 24 12C24 5.3625 18.6375 0 12 0Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://medium.com/dfinity-network-blog">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22.3125 1H1.6875C1.50516 1 1.3303 1.07243 1.20136 1.20136C1.07243 1.3303 1 1.50516 1 1.6875L1 22.3125C1 22.4948 1.07243 22.6697 1.20136 22.7986C1.3303 22.9276 1.50516 23 1.6875 23H22.3125C22.4948 23 22.6697 22.9276 22.7986 22.7986C22.9276 22.6697 23 22.4948 23 22.3125V1.6875C23 1.50516 22.9276 1.3303 22.7986 1.20136C22.6697 1.07243 22.4948 1 22.3125 1V1ZM19.2768 6.21228L18.0971 7.34356C18.0471 7.38153 18.0085 7.43245 17.9854 7.4908C17.9623 7.54916 17.9557 7.61272 17.9661 7.67459V15.9875C17.9557 16.0494 17.9623 16.1129 17.9854 16.1713C18.0085 16.2296 18.0471 16.2806 18.0971 16.3185L19.2493 17.4498V17.698H13.4534V17.4498L14.6469 16.2903C14.7641 16.1731 14.7641 16.1388 14.7641 15.9593V9.24072L11.4455 17.6698H10.9987L7.13319 9.24072V14.8899C7.11729 15.0071 7.12828 15.1264 7.16533 15.2387C7.20237 15.351 7.2645 15.4535 7.347 15.5382L8.89937 17.4213V17.6695H4.49731V17.4213L6.04969 15.5382C6.13152 15.4534 6.19226 15.3505 6.22701 15.2379C6.26177 15.1253 6.26956 15.0061 6.24975 14.8899V8.35866C6.25855 8.26945 6.24627 8.17943 6.21391 8.09584C6.18155 8.01225 6.13001 7.93743 6.06344 7.87741L4.68362 6.21503V5.96684H8.96847L12.2805 13.2303L15.1924 5.96684H19.2768V6.21228Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://twitter.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23 5.33654C22.175 5.67308 21.3156 5.94231 20.4219 6.04327C21.35 5.50481 22.0719 4.62981 22.4156 3.58654C21.5562 4.09135 20.5938 4.46154 19.5625 4.66346C18.7031 3.78846 17.5344 3.25 16.2281 3.25C13.7187 3.25 11.725 5.23558 11.725 7.65865C11.725 7.99519 11.7594 8.33173 11.8281 8.66827C8.08125 8.5 4.74688 6.71635 2.54688 4.05769C2.16875 4.69712 1.92813 5.47115 1.92813 6.27885C1.92813 7.82692 2.71875 9.17308 3.92188 9.94712C3.16562 9.91346 2.47812 9.71154 1.89375 9.40865C1.89375 9.44231 1.89375 9.44231 1.89375 9.47596C1.89375 11.6298 3.44063 13.4135 5.50313 13.8173C5.125 13.9183 4.7125 13.9856 4.3 13.9856C4.025 13.9856 3.71562 13.9519 3.44062 13.9183C4.025 15.6683 5.675 16.9471 7.66875 16.9808C6.12187 18.1587 4.1625 18.8654 2.06562 18.8654C1.6875 18.8654 1.34375 18.8317 1 18.7981C2.99375 20.0096 5.36563 20.75 7.90938 20.75C16.2281 20.75 20.7656 14.0192 20.7656 8.16346C20.7656 7.96154 20.7656 7.79327 20.7656 7.59135C21.625 6.98558 22.3813 6.21154 23 5.33654Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://forum.dfinity.org/">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12.0932 1C6.0727 1 1 5.83706 1 11.8085C1 12 1.00488 23 1.00488 23L12.0933 22.9901C18.1188 22.9901 23 17.9666 23 11.9951C23 6.02373 18.1188 1 12.0932 1ZM12 18.2857C11.0473 18.2857 10.1388 18.0745 9.32853 17.6916L5.34597 18.6786L6.47047 14.9956C5.98926 14.1067 5.71423 13.0853 5.71423 12C5.71423 8.52815 8.52811 5.71428 12 5.71428C15.4719 5.71428 18.2857 8.52815 18.2857 12C18.2857 15.472 15.4719 18.2857 12 18.2857Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://www.linkedin.com/company/dfinity'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M1 4.35878C1 3.01688 2.03589 2 3.61924 2C5.20139 2 6.17406 3.01448 6.20507 4.35519C6.20507 5.67205 5.20139 6.71456 3.58942 6.71456H3.55841C2.00666 6.71456 1 5.67562 1 4.35878ZM17.5581 8.28158C15.1017 8.28158 13.5625 9.61217 13.278 10.5449V8.41225H8.46122C8.52324 9.54475 8.46122 21.9995 8.46122 21.9995H13.278V14.647C13.278 14.5987 13.2778 14.5505 13.2775 14.5025C13.2756 14.1436 13.2736 13.7952 13.383 13.5365C13.714 12.7194 14.4255 11.8719 15.7046 11.8719C17.3775 11.8719 18.1378 13.128 18.1378 14.9685V21.9995H23V14.4448C23 10.236 20.6056 8.28158 17.5581 8.28158ZM1.55371 8.41275H5.84157V22H1.55371V8.41275Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://youtube.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23.775 7.6375C23.775 7.6375 23.55 5.9875 22.8375 5.2375C21.9375 4.3 20.8875 4.2625 20.4375 4.225C17.025 4 12 4 12 4C12 4 6.975 4 3.6 4.225C3.1125 4.2625 2.1 4.3 1.2 5.2375C0.4875 5.95 0.2625 7.6375 0.2625 7.6375C0.2625 7.6375 0 9.5875 0 11.5375V13.375C0 15.325 0.225 17.275 0.225 17.275C0.225 17.275 0.45 18.925 1.1625 19.675C2.0625 20.6125 3.2625 20.6125 3.825 20.6875C5.7375 20.875 12 20.9125 12 20.9125C12 20.9125 17.025 20.9125 20.4 20.65C20.8875 20.6125 21.9 20.575 22.8 19.6375C23.5125 18.925 23.7375 17.2375 23.7375 17.2375C23.7375 17.2375 24 15.2875 24 13.3375V11.5C24 9.5875 23.775 7.6375 23.775 7.6375ZM9.525 15.55V8.8L16.0125 12.175L9.525 15.55Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+      </div>
+    </nav>
+
+    <div class="legal-container">
+      <span class="legal" id="year">
+        © 2020 DFINITY
+      </span>
+      <a class="legal footer-link" href="http://www.dfinity.org/terms-of-use">
+        Terms of Use
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/cookie-policy">
+        Cookie Policy
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/privacy-policy">
+        Privacy Policy
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  var today = new Date();
+  var year = today.getFullYear();
+  document.getElementById("year").innerHTML = `© ${year} DFINITY`;
+</script><script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+    apiKey: 'b93d56cc4b00b0afbcdaacab04dcf25b',
+    indexName: 'dfinity_sdk',
+    inputSelector: '.search-input',
+    debug: false // Set debug to true if you want to inspect the dropdown
+  });
+</script>
+
+<!-- Start of dfinity Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=53121947-c10a-484c-b99b-f89a9fb6f63e"> </script>
+<!-- End of dfinity Zendesk Widget script -->
+
+<script src="../../_/js/vendor/run_repl.js"></script>
+<script type="module">
+  import {CodeJar} from 'https://cdn.jsdelivr.net/npm/codejar@3.2.3/codejar.min.js';
+  import {withLineNumbers} from 'https://cdn.jsdelivr.net/npm/codejar@3.2.3/linenumbers.js';
+  window.CodeJar = CodeJar;
+  window.withLineNumbers = withLineNumbers;
+</script> 
+<script type="text/javascript">
+async function addPackage(name, repo, version, dir) {
+  const meta_url = `../../_/js/vendor/${repo}/flat`;
+  const base_url = `../../_/js/vendor/${repo}`;
+  const response = await fetch(meta_url);
+  const json = await response.json()
+  const promises = [];
+  const fetchedFiles = [];
+  for (const f of json.files) {
+    if (f.name.startsWith(`/${dir}/`) && /\.mo$/.test(f.name)) {
+      const promise = (async () => {
+        const content = await (await fetch(base_url + f.name)).text();
+        const stripped = name + f.name.slice(dir.length + 1);
+        fetchedFiles.push(stripped);
+        Motoko.saveFile(stripped, content);
+      })();
+      promises.push(promise);
+    }
+  }
+  Promise.all(promises).then(() => {
+    Motoko.addPackage(name, name + '/');
+    console.log("base library loaded");
+    changeCodeBlock(); // from run_repl.js
+  });
+}
+function loadBase() {
+  addPackage('base', 'dfinity/motoko-base', 'moc-0.6.27', 'src');
+}
+</script>
+<script async src="../../_/js/vendor/moc.js" onload="loadBase()">
+</script>
+  </body>
+</html>

@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Motoko style guidelines :: Motoko documentation</title>
+    <meta name="generator" content="Antora 2.3.4">
+<link rel="stylesheet" href="../../_/css/site.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" /><meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:title" content="The Internet Computer | Documentation" />
+<meta property="og:description" content="Documentation for the internet computer." />
+<meta property="og:image" content="../../_/img/share.jpg" />
+<meta property="og:image:url" content="../../_/img/share.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@DFINITYDev" />
+<meta name="twitter:image" content="../../_/img/logo-RGB.png" />
+<meta name="twitter:image:alt" content="DFINITY Logo" />    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="logo-container" href="https://dfinity.org/">
+        <img class="header-logo" src="../../_/img/logo.svg">
+        <h1 class="header-title">Motoko documentation</h1>
+      </a>
+    </div>
+    <div class="nav-items-wrapper">
+      <div class="search-container">
+  <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd"
+      d="M11.8654 12.5892C10.8213 13.4695 9.47259 14 8 14C4.68629 14 2 11.3137 2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8C14 9.47209 13.4699 10.8204 12.5901 11.8643L17.3625 16.6367L16.6377 17.3615L11.8654 12.5892ZM12.9333 8C12.9333 10.7246 10.7246 12.9333 8 12.9333C5.2754 12.9333 3.06667 10.7246 3.06667 8C3.06667 5.2754 5.2754 3.06667 8 3.06667C10.7246 3.06667 12.9333 5.2754 12.9333 8Z"
+      fill="black" />
+  </svg>
+
+
+  <input class="search-input" placeholder="Search" type="search" />
+</div>      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div id="topbar-nav" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" target="blank" href="https://forum.dfinity.org/">Forum</a>
+          <a class="navbar-item" target="blank" href="mailto:support@dfinity.org?subject=Feedback - SDK Developer Center">Email us</a>
+          <a class="navbar-item" target="blank" href="https://www.twitter.com/dfinitydev">
+            <img src="../../_/img/social/twitter-icon.svg">
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="docs" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">docs</span>
+    <span class="version">master</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">docs</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="file:///build/doc/modules/language-guide/pages/style.adoc"><svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a></div>
+</div>
+<div class="main-content">
+<article class="doc">
+<h1 class="page">Motoko style guidelines</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>To increase readability and uniformity of Motoko source code, the style guide provides suggestions for formatting Motoko sources and other basic conventions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_layout"><a class="anchor" href="#_layout"></a>Layout</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_spacing"><a class="anchor" href="#_spacing"></a>Spacing</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Put spaces around arithmetic operators, except to visually group sub-expressions of more tightly binding operators.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let z = - 2*x + 3*y + 4*(x*x + y*y);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put spaces around comparison operators, Boolean operators, and assignment operators.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">4 + 5 &lt;= 5 + 4;
+not (a or b and not c);
+v := 0;
+v += 1;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put spaces around '='.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">var v = 0;
+let r = { a = 1; b = 2 };</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Analogously, put spaces around <code>:</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">var v : Nat = 0;
+func foo(x : Nat, y : Nat) : Nat { x + y }
+func bar((x, y) : (Nat, Nat)) : Nat { x + y }
+let w = 1 ^ 0xff : Nat16;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: ':' is to declarations what '=' is to definitions.
+Moreover, the left-hand of a type annotation may generally be an arbitrary complex expression or pattern.</p>
+</div>
+</li>
+<li>
+<p>Put a space after a comma or semicolon (but not before).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let tuple = (1, 2, 3);
+let record = { a = 1; b = 2; c = 3 };</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put spaces inside braces, unless they are a simple variant or record.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func f() { 0 };
+f({ a = 1; b = 2; c = 3 });
+f({a = 1; b = 2});  // okay as well
+
+type Vec3D = { x : Float; y : Float; y : Float };
+type Order = { #less; #equal; #more };
+
+type Order = {#less; #equal; #more};  // okay as well
+type Proc = {h : Nat; w : Nat} -&gt; {#ok; #fail};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put spaces inside brackets if they stretch multiple lines.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">foo(
+  firstArgument,
+  ( longTupleComponent, anotherLongExpression,
+    moreLongExpression
+  ),
+  [ 1, 2, 3,
+    4, 5, 6,
+  ],
+  { field1 = 4; field2 = 5;
+    field3 = 6;
+  }
+);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put a space between statement keywords and their operands.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">if (f()) A else B;
+for (x in xs.vals()) { ... };
+switch (compare(x, y)) {
+  case (#less) { A };
+  case (_) { B };
+}
+
+assert (x &lt; 100);
+await (async (0));</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Do <em>not</em> put a space between a function or variant tag and its argument tuple or around a generic type parameter list.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Pair&lt;X&gt; = (X, X);
+type Id = &lt;X&gt;(X) -&gt; X;
+
+let ok = #ok(5);
+
+func id&lt;X&gt;(x : X) : X { x };
+id&lt;Nat&gt;(5);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put a space between a function and its argument if it is <em>not</em> a tuple or parenthesized expression (see <a href="#parens">Parentheses</a>) or a record used as a named parameter list (see <a href="#picking-types">Picking types</a>).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">sin 0.0;
+g [1, 2, 3];
+f{arg1 = 0; arg2 = 0};</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Rationale: <code>g[1]</code> in particular will be misparsed as an indexing operation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do <em>not</em> put a space around access operators like <code>.</code>, <code>?</code>, <code>!</code>, or index brackets.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">foo(bar).baz[5]().boo;
+foom(?(bam()! + 1));</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_line_breaks"><a class="anchor" href="#_line_breaks"></a>Line breaks</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Pick a fixed right margin for lines and break definitions or expressions that are longer than that (80 still is considered a good limit by many).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let sum = a + b + 2*c + d +
+  e + f + g + h + i + k +
+  l + m + n + o + p;
+
+// Or:
+let sum =
+  a + b + 2*c + d + e +
+  f + g + h + i + k + l +
+  m + n + o + p;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Among other reasons, this style of formatting:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Avoids code being hidden to the right in a window.</p>
+</li>
+<li>
+<p>Avoids random line breaks in side-by-side diffs (for example, as shown by GitHub or similar code review tools).</p>
+</li>
+<li>
+<p>Allows prettier display on paper, web sites, or other media.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Break lines <em>after</em> an operator.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">a + b + c +
+  d + f;
+
+foo(bar, baz).
+  boo();</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>When breaking function definitions or calls with long argument lists, put each argument on a separate line.</p>
+<div class="paragraph">
+<p>Also, consider using records for long parameter lists, see <a href="#picking-types">Picking types</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func someFunction(
+  arg1 : FirstType,
+  arg2 : SecondType,
+  anotherArg : Nat,
+  yetAnother : [Type],
+  func : Nat -&gt; Nat,
+) : Nat {
+  ...
+};
+
+someFunction(
+  veryLongArgumentExpression,
+  anotherVeryLongArgumentExpression,
+  3,
+  aNestedFunctionCall(
+    alsoWithLongArguments,
+    andMoreSuchArguments,
+  ),
+  moreLongishArgument,
+);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: This prevents overlooking an argument when reading code and avoids re-breaking lines when changing one of the expressions.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_indentation"><a class="anchor" href="#_indentation"></a>Indentation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Each level of indentation should be 2 spaces.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">actor A {
+  public func f() {
+    return;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: There may be a lot of nesting. Using only 2 spaces avoids wasting screen estate.</p>
+</div>
+</li>
+<li>
+<p>Indentation should not depend on the lexical contents of previous lines.</p>
+<div class="paragraph">
+<p>In particular, do not vertically align indentation with inner characters from previous lines.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let x = someFunction(
+  arg1, arg2, arg3, arg4, arg5);               // Do this.
+
+let x = someFunction(arg1, arg2, arg3,
+  arg4, arg5);                                 // Or this.
+
+let x =
+  someFunction(arg1, arg2, arg3, arg4, arg5);  // Or this.
+
+let x = someFunction(                          // Or this.
+  longArg1,
+  longArg2,
+  longArg3,
+  longArg4,
+  longArg5,
+);
+
+// COUNTER EXAMPLE!
+let x = someFunction(arg1, arg2, arg3,
+                     arg4, arg5);              // DO NOT DO THIS!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: There are many problems with vertical alignment, for example:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It wastes a lot of horizontal space.</p>
+</li>
+<li>
+<p>It creates wildly inconsistent indentation levels that obfuscate the structure of the code.</p>
+</li>
+<li>
+<p>It can produce realignment churn when changing a line, which (even when automated by editors) inflates and obfuscates diffs.</p>
+</li>
+<li>
+<p>It completely breaks with variable-width fonts.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Rule of thumb: there should be no indentation that is not a multiple of 2.</p>
+</div>
+</li>
+<li>
+<p>Do not use tabs.</p>
+<div class="paragraph">
+<p>Rationale: The interpretation of tabs varies wildly across tools and they get lost or are displayed incorrectly in many contexts, such as web pages, diffs, etc.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_grouping"><a class="anchor" href="#_grouping"></a>Grouping</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Separate complex multi-line definitions with empty lines.
+One-liners can be put on consecutive lines.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func foo() {
+  // This function does a lot of interesting stuff.
+  // It's definition takes multiple lines.
+}
+
+func boo() {
+  // This is another complicated function.
+  // It's definition also takes multiple lines.
+}
+
+func add(x : Nat, y : Nat) { return x + y };
+func mul(x : Nat, y : Nat) { return x * y };</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Separate logic groups of definitions with two empty lines.
+Add a one-line comment as a "section header" for each group.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">// A very large class
+class MuffleMiff(n : Nat) {
+
+
+  // Accessors
+
+  public func miffMuff() : Text {
+    ...
+  }
+
+  public func sniffMiff() : Nat {
+    ...
+  }
+
+
+  // Mutators
+
+  public func clearMurk() {
+    ...
+  }
+
+  public func addMuff(name : Text) {
+    ...
+  }
+
+
+  // Processing
+
+  public func murkMuffle(param : List&lt;Gnobble&gt;) {
+    ...
+  }
+
+  public func transformSneezler() {
+    ...
+  }
+
+
+  // Internal State
+
+  var miffCount = 0;
+  var mabbleMap = Map&lt;Nat, Text&gt;();
+
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_comments"><a class="anchor" href="#_comments"></a>Comments</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use line comments (<code>//&#8230;&#8203;</code>).
+Use block comments (<code>/* &#8230;&#8203; */</code>) only when commenting in the middle of a line or for commenting out pieces of code during development.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">// The following function runs the current
+// pallaboom on a given snibble. It returns
+// suitable plexus if it can.
+func paBoom(s : Snibble) : Handle&lt;Plexus&gt; {
+  let puglet = initPugs(s.crick, 0 /* size */, #local);
+/* Don't do the odd stuff yet...
+  ...
+  ...
+*/
+  return polyfillNexus(puglet);  // for now
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Line comments make it easier to insert, remove or swap individual lines.</p>
+</div>
+</li>
+<li>
+<p>Put short comments explaining a single line at the end of the line, separated by at least 2 spaces.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">paBoom(getSnibble()));  // create new snibble</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put multi-line comments before a line of code, with the same indentation as the code it is describing.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func f() {
+  // Try to invoke the current pallaboom with
+  // the previous snibble. If that succeeds,
+  // we have the new plexus; if not, complain.
+  let plexusHandle = paBoom(getSnibble()));
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Capitalize comments that are on separate lines.
+Use a proper full stop for sentences.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_punctuation"><a class="anchor" href="#_punctuation"></a>Punctuation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_semicolons"><a class="anchor" href="#_semicolons"></a>Semicolons</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Motoko uniformly requires a semicolon to separate expressions or local declarations in a block, regardless of whether the preceding declaration ends in a closing '}'.</p>
+<div class="paragraph">
+<p>Rationale: This is unlike other C-style languages, which tend to have rather ad-hoc rules.</p>
+</div>
+</li>
+<li>
+<p>Put a semicolon after the last expression in a block, unless the whole block is written on a single line.</p>
+<div class="paragraph">
+<p>Similarly for types.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">// No ; needed before closing } on same line
+
+type Vec3D = {x : Float; y : Float; z : Float};
+type Result&lt;A&gt; = {#ok : A; #error : Text};
+
+func add(x : Nat, y : Nat) : Nat { return x + y };
+
+
+// End last case with ;
+
+type Address = {
+  first : Text;
+  last : Text;
+  street : Text;
+  nr : Nat;
+  zip : Nat;
+  city : Text;
+};
+
+type Expr = {
+  #const : Float;
+  #add : (Expr, Expr);
+  #mul : (Expr, Expr);
+};
+
+func eval(e : Expr) : Float {
+  switch (e) {
+    case (#const(x)) { x };
+    case (#add(e1, e2)) { eval(e1) + eval(e2) };
+    case (#mul(e1, e2)) { eval(e1) * eval(e2) };
+  };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Consistently ending lines with semicolon simplifies adding, removing, or swapping lines.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_braces"><a class="anchor" href="#_braces"></a>Braces</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Put braces around function bodies, <code>if</code> or <code>case</code> branches, and loop bodies, unless they appear nested as an expression and only contain a single expression.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func f(x) { f1(x); f2(x) };
+
+let abs = if (v &gt;= 0) v else -v;
+let val = switch (f()) { case (#ok(x)) x; case (_) 0 };
+func succ(x : Nat) : Nat = x + 1;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use "C-style" layout for braced sub-expressions stretching multiple lines.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func f() {
+  return;
+};
+
+if (cond) {
+  foo();
+} else {
+  bar();
+};
+
+switch (opt) {
+  case (?x) {
+    f(x);
+  };
+  case (null) {};
+};</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="parens"><a class="anchor" href="#parens"></a>Parentheses</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Motoko supports "parenless" style, meaning that parentheses are optional in most places, such as function parameter lists, or statement operands, when they enclose an expression that either is bracketed already (for example, a tuple, object, or array) or is a simple constant or identifier.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Op = Nat -&gt; Nat;
+let a2 = Array.map&lt;Nat, Nat&gt;(func x { x + 1 }, a);
+
+let y = f x;
+let z = f {};
+let choice = if flag { f1() } else { f2() };
+
+switch opt {
+  case null { tryAgain() };
+  case _ { proceed() };
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Avoid overuse of parenless style.</p>
+<div class="paragraph">
+<p>In particular, do not omit parentheses and braces on statements at the same time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">// COUNTER EXAMPLES!
+let choice = if flag x + y else z;  // DO NOT DO THIS!
+
+switch val {
+  case 0 f();    // DO NOT DO THIS!
+  case n n + 1;  // OR THIS!
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Omitting both at the same time makes the code harder to read, since there is less visual clue how it groups.</p>
+</div>
+</li>
+<li>
+<p>Similarly, do not omit parentheses around function parameters if the function also has type parameters.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">// COUNTER EXAMPLE!
+foo&lt;Nat&gt; 0;   // DO NOT DO THIS!</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Omit parentheses around argument types of a function type with a single argument and no type parameters.</p>
+<div class="paragraph">
+<p>But do not omit them around when functions or classes also have type parameters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type Inv = Nat -&gt; Nat;
+type Id = &lt;T&gt;(T) -&gt; T;
+type Get = &lt;X&gt;(C&lt;X&gt;) -&gt; X;
+
+// COUNTER EXAMPLE!
+type Get = &lt;X&gt;C&lt;X&gt; -&gt; X;   // DO NOT DO THIS!</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_miscellaneous"><a class="anchor" href="#_miscellaneous"></a>Miscellaneous</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>_</code> to group digits in numbers.</p>
+<div class="paragraph">
+<p>Group by 3 digits in decimal numbers and by 4 in hexadecimal notation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let billion = 1_000_000_000;
+let pi = 3.141_592_653_589_793_12;
+let mask : Nat32 = 0xff00_ff0f;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_naming"><a class="anchor" href="#_naming"></a>Naming</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_style"><a class="anchor" href="#_style"></a>Style</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>UpperCamelCase</code> for type names (including classes or type parameters), module names, and actor names.</p>
+</li>
+<li>
+<p>Use <code>lowerCamelCase</code> for all other names, including constants and variant fields.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">module MoreMuff {
+  type FileSize = Nat;
+  type Weekday = {#monday; #tuesday; #wednesday};
+  type Pair&lt;X&gt; = (X, X);
+
+  class Container&lt;X, Y&gt;() { ... };
+
+  func getValue&lt;Name&gt;(name : Name) : Pair&lt;Name&gt; { ... };
+
+  let zero = 0;
+  let pair = getValue&lt;Text&gt;("opus");
+  var nifty : Nat = 0;
+
+  object obj { ... };
+
+  actor ServerProxy { ... };
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: The general convention is upper case for "static" entities like types and lower case for "dynamic" values. Modules and actors are fairly static and can export types. Objects usually don&#8217;t export types and tend to be used mostly as dynamic values.</p>
+</div>
+</li>
+<li>
+<p>Spell acronyms as regular words.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">type HttpHeader = ...;
+func getUrl() { ... };
+let urlDigest = ...;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Do not use identifier names that start with an underscore <code>_</code>, except to document that a variable in a pattern is intentionally unused.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let (width, _color, name) = rumpler();
+...  // _color is not used here
+
+
+func foo(x : Nat, _futureFlag : Bool) { ... };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: A type checker can warn about unused identifiers, which can be suppressed by explicitly prepending <code>_</code> to its name to document intention.</p>
+</div>
+<div class="paragraph">
+<p>This aligns with the use of the keyword <code>_</code> for pattern wildcards.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conventions"><a class="anchor" href="#_conventions"></a>Conventions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The name of functions returning a value should describe that value (as a noun).</p>
+<div class="paragraph">
+<p>Avoid redundant <code>get</code> prefixes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">dict.size();
+list.first();
+sum(array);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The name of functions performing side effects or complex operations should describe that operation (as a verb in imperative form).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">dict.clear();
+dict.set(key, value);
+let result = traverse(graph);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The name of predicate functions returning <code>Bool</code> should use an <code>is</code> or <code>has</code> prefix or a similar description of the tested property (as a verb in indicative form).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Set&lt;X&gt;() {
+  public func size() : Nat { ... };
+
+  public func add(x : X) { ... };
+  public func remove(x : X) { ... };
+
+  public func isEmpty() : Bool { ... };
+  public func contains(x : X) : Bool { ... };
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Functions converting to or from a type <code>X</code> are named <code>toX</code> and <code>fromX</code>, respectively, if the source, resp. target, is either the object the function is a method of, or the primary type of the module this function appears in.</p>
+</li>
+<li>
+<p>In classes or objects, use a name ending with <code>_</code> to distinguish private variables from getters.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Cart(length_ : Nat) {
+  var width_ = 0;
+
+  public func length() : Nat { return length_ };
+  public func width() : Nat { return width_ };
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: In Motoko, functions are first-class values, so functions and other value identifiers share the same name space.</p>
+</div>
+<div class="paragraph">
+<p>Identifiers with a leading <code><em></code> should _not</em> be used for private state, since that indicates an unused name (see <a href="#style">[style]</a>).</p>
+</div>
+</li>
+<li>
+<p>Use longer, more descriptive names for global or public identifier or ones with large scope, and short names for local ones with small scope.</p>
+<div class="paragraph">
+<p>It is fine to use single character identifiers when there is nothing interesting to say, especially when using the same naming scheme consistently.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func map(x : Nat, y : Nat) : Nat { x + y };
+
+func eval(e : Expr) : Nat {
+  let n =
+    switch (e) {
+      case (#neg(e1)) { - eval(e1) };
+      case (#add(e1, e2)) { eval(e1) + eval(e2) };
+      case (#mul(e1, e2)) { eval(e1) * eval(e2) };
+    };
+  Debug.print(n);
+  return n;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Contrary to popular belief, overly chatty local names can decrease readability instead of increasing it, by increasing the noise level.</p>
+</div>
+</li>
+<li>
+<p>In suitable cases, use plural form for describing a collection of items, such as a list or array.</p>
+<div class="paragraph">
+<p>This also works for short names.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func foreach&lt;X&gt;(xs : [X], f : X -&gt; ()) {
+  for (x in xs.vals()) { f(x) }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_types"><a class="anchor" href="#_types"></a>Types</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_type_annotations"><a class="anchor" href="#_type_annotations"></a>Type Annotations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Put type annotations on definitions that involve fixed-width numeric types, to disambiguate the type of overloaded arithmetic operators and constants.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let mask : Nat32 = 0xfc03_ff00;
+let pivot : Nat32 = (size + 1)/2;
+let vec : [Int16] = [1, 3, -4, 0];</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Use floating point constants to enforce type <code>Float</code> without an extra annotation.
+Similarly, use an explicit <code>+</code> sign to produce a positive value of type <code>Int</code> instead of <code>Nat</code>, if desired.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let zero = 1.0;    // type Float
+let offset = +1;   // type Int</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Similarly, put inline type annotations on arithmetic expressions with types other than <code>Nat</code> or <code>Int</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">if (x &amp; mask == (1 : Nat32)) { ... };</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The need to annotate constants in cases like this is a short-coming of Motoko&#8217;s type system that we hope to address soon.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>An annotation is not needed on function arguments, since their type is usually inferred from the function.
+The only exception is when that argument has generic type and the type arguments have been omitted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func foo(len : Nat32, vec : [Nat16]) { ... };
+func bar&lt;X&gt;(x : X) { ... };
+
+foo(3, [0, 1, 2]);
+bar&lt;Nat16&gt;(0);
+bar(0 : Nat16);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put type annotations on mutable variables, unless their type is obvious.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">var name = "Motoko";
+var balance = 0;
+
+func f(i : Int) {
+  var j = i;
+};
+
+var balance : Int = 0;
+var obj : Class = foo();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: Due to subtyping, inferring the type from the initialisation would not necessarily deduce the intended type. For example, <code>balance</code> would have type <code>Nat</code> without the annotation, ruling out assignments of integers.</p>
+</div>
+</li>
+<li>
+<p>Put type annotations on all public fields in a class.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class C(init_ : Nat) {
+  public let init : Nat = init_;
+  public var count : Nat = 0;
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Omit return type annotations of functions when the type is <code>()</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func twiceF() { f(); f() };  // no need to write ": ()"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Omit type annotations on functions when they are passed as arguments.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">Array.map&lt;Nat, Nat&gt;(func n {n + 1}, a);</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Put type annotations on definitions that involve numeric types other than <code>Nat</code> or <code>Int</code>, to resolve the overloading between arithmetic operators and constants.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">let mask : Nat32 = 0xfc03_ff00;
+let offset : Nat32 = size + 1;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="picking-types"><a class="anchor" href="#picking-types"></a>Picking types</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>Nat</code> for any integral value that cannot be negative.</p>
+</li>
+<li>
+<p>Use fixed-width <code>NatN</code> or <code>IntN</code> only when storing many values and space usage matters, when bit-fiddling requires the low-level interpretation of a number as a vector of bits or when matching types imposed by external requirements, such as other canisters.</p>
+</li>
+<li>
+<p>Avoid proliferation of option types, and therefore <code>null</code>.</p>
+<div class="paragraph">
+<p>Limit their use to as small a scope as possible. Rule out the <code>null</code> case and use non-option types wherever possible.</p>
+</div>
+</li>
+<li>
+<p>Consider using records (objects with just data) instead of tuples when there are more than 2 or 3 components.</p>
+<div class="paragraph">
+<p>Note that record types need not be declared but can be used in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">  func nodeInfo(node : Node) : {parent : Node; left : Node; right : Node} { ... }</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Consider using variants instead of <code>Bool</code> to represent binary choices.</p>
+<div class="paragraph">
+<p>Note that variant types need not be declared but can be used in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func capitalization(word : Text) : {#upper; #lower} { ... }</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Where possible, use return type <code>()</code> for functions whose primary purpose is to mutate state or cause other side effects.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">class Set&lt;X&gt;() {
+  public func add(x : X) { ... };
+  public func remove(x : X) { ... };
+  ...
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Consider using a record (an object with just data) as argument for long parameter lists.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func process({seed : Float; delta : Float; data : [Record]; config : Config}) : Thing {
+  ...
+};
+
+process{config = Config(); data = read(); delta = 0.01; seed = 1.0};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: This expresses named parameters. This way, arguments can be freely reordered at the call site and callers are prevented from accidentally passing them in the wrong order.</p>
+</div>
+</li>
+<li>
+<p>Higher-order functions (functions that take a callback argument) should put the function parameter last.</p>
+<div class="paragraph">
+<p>Rationale: Makes call sites more readable, and in the absence of currying, there is no point in putting the function first, like you often would in functional languages.</p>
+</div>
+</li>
+<li>
+<p>Do not use sentinel values, such as <code>-1</code>, to represent invalid values.</p>
+<div class="paragraph">
+<p>Use the option type instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func lookup(x : key) : ?Nat { ... }</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Data is immutable in Motoko unless explicitly stated otherwise.</p>
+<div class="paragraph">
+<p>Use mutability types and definitions (<code>var</code>) with care and only where needed.</p>
+</div>
+<div class="paragraph">
+<p>Rationale: Mutable data cannot be communicated or share across actors.
+It is more error-prone and much more difficult to formally reason about, especially when concurrency is involved.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features"><a class="anchor" href="#_features"></a>Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_statements"><a class="anchor" href="#_statements"></a>Statements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>for</code> loops instead of <code>while</code> loops for iterating over a numeric range or a container.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">for (i in Iter.range(1, 10)) { ... };
+for (x in array.vals()) { ... };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Rationale: For loops are less error-prone and easier to read.</p>
+</div>
+</li>
+<li>
+<p>Use <code>if</code> or <code>switch</code> as expressions where appropriate.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func abs(i : Int) : Int { if (i &lt; 0) -i else i };
+
+let delta = switch mode { case (#up) +1; case (#dn) -1 };</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Motoko requires that all expressions in a block have type <code>()</code>, in order to prevent accidentally dropped results.</p>
+<div class="paragraph">
+<p>Use <code>ignore</code> to explicitly drop results. Do <em>not</em> use <code>ignore</code> when it&#8217;s not needed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">ignore async f();  // fire of a computation</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Motoko allows to omit the <code>return</code> at the end of a function, because a block evaluates to its last expression.</p>
+<div class="paragraph">
+<p>Use this when a function is short and in "functional" style, that is, the function does not contain complex control flow or side effects.</p>
+</div>
+<div class="paragraph">
+<p>Use explicit <code>return</code> at the end when the function contains other <code>return</code> statements or imperative control flow.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-motoko hljs" data-lang="motoko">func add(i : Nat, j : Nat) : Nat { i + j };
+
+func foo(a : Float, b : Float) : Float {
+  let c = a*a + b*b;
+  c + 2*c*c;
+};
+
+func gcd(i : Nat, j : Nat) : Nat {
+  if (j == 0) i else gcd(j, i % j);
+};
+
+func gcd2(i : Nat, j : Nat) : Nat {
+  var a = i;
+  var b = j;
+  while (b &gt; 0) {
+    let c = a;
+    a := b;
+    b := c % b;
+  };
+  return a;
+};</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_objects_and_records"><a class="anchor" href="#_objects_and_records"></a>Objects and records</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the short-hand object syntax <code>{x1 = e1; &#8230;&#8203; ; xN = eN}</code> when using objects as simple <em>records</em>, i.e., data structures with no private state and no methods.</p>
+</li>
+<li>
+<p>Use <code>object</code> when creating singleton objects.</p>
+</li>
+<li>
+<p>Limit the use of objects to records where possible.</p>
+<div class="paragraph">
+<p>Rationale: Only records can be sent as message parameters or results and can be stored in stable variables. Objects with methods are also more expensive to create and represent in memory.</p>
+</div>
+</li>
+<li>
+<p>Use full objects only as a means for encapsulating state or behaviour.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_classes"><a class="anchor" href="#_classes"></a>Classes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>class</code> to create multiple objects of the same shape.</p>
+</li>
+<li>
+<p>Name classes after their conceptual <em>functionality</em>, not their <em>implementation</em>, except when having to distinguish multiple different implementations of the same concept (for example, <code>OrderedMap</code> vs <code>HashMap</code>).</p>
+</li>
+<li>
+<p>Classes are both type definitions and factory functions for objects.</p>
+<div class="paragraph">
+<p>Do not use classes unless both these roles are intended; use plain type aliases or functions returning an object in other cases.</p>
+</div>
+</li>
+<li>
+<p>Do not overuse classes.</p>
+<div class="paragraph">
+<p>Use a module defining a plain type and functions on it where appropriate.
+Use classes only as a means for encapsulating state or behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Rationale: Objects with methods have disadvantages over simple record types with separate functions (see above).</p>
+</div>
+</li>
+<li>
+<p>If values of a class are meant to be sendable (shared), the class needs to provide a pair of <code>share</code>/<code>unshare</code> methods that convert to/from a sharable representation, for example, as a record.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For immutable classes it may seem more natural to make <code>unshare</code> a kind of static function.
+However, even for immutable ones it may depend on constructor arguments (such as an ordering function), so that the a pattern like <code>Map(compareInt).unshare(x)</code> seems appropriate.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>For the time being, avoid overloading classes with too many methods, since that is currently expensive.</p>
+<div class="paragraph">
+<p>Restrict to a sufficiently small set of canonical methods and make less essential ones that can be implemented on top of those into functions in the enclosing module.</p>
+</div>
+</li>
+<li>
+<p>Use modules for "static" classes or methods.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_modules"><a class="anchor" href="#_modules"></a>Modules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>module</code> to group definitions (including types) and create a name spae for them.</p>
+</li>
+<li>
+<p>Where applicable, name modules after the main type or class they implement or provide functions for.</p>
+</li>
+<li>
+<p>Limit each module to a single main concept/type/class or closely entangled family of concepts/types/classes.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar">
+  
+  <div class="toc-menu"></div>
+</aside></div>
+</main></div>
+<footer class="footer">
+  <div class="footer-container">
+    <a href="http://www.dfinity.org"><img class="footer-logo" src="../../_/img/logo.svg"></a>
+    <nav class="footer-nav">
+      <div class="col1">
+        <h5 class="footer-header">Developers</h5>
+        <a class="footer-link" href="http://www.dfinity.org/faq">
+          FAQ
+        </a>
+        <a class="footer-link" href="#">
+          Developers
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/data-centers">
+          Data Centers
+        </a>
+      </div>
+
+      <div class="col2">
+        <h5 class="footer-header">Team</h5>
+        <a class="footer-link" href="http://www.dfinity.org/foundation">
+          Foundation
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/foundation#events">
+          Events
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/careers">
+          Careers
+        </a>
+      </div>
+
+
+      <div class="col3">
+        <h5 class="footer-header">Media</h5>
+        <a class="footer-link" href="http://www.dfinity.org/media">
+          Featured Videos
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/media#featured-stories">
+          Featured Stories
+        </a>
+        <a class="footer-link" href="http://www.dfinity.org/newsletter">
+          Newsletter
+        </a>
+      </div>
+
+      <div class="social-icons">
+
+        <a class="social-icon-link" target="blank" href="https://github.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 0C5.3625 0 0 5.3625 0 12C0 17.2875 3.45 21.7875 8.2125 23.4C8.8125 23.5125 9.0375 23.1375 9.0375 22.8375C9.0375 22.5375 9.0375 21.7875 9.0375 20.8125C5.7 21.525 4.9875 19.2 4.9875 19.2C4.425 17.8125 3.6375 17.4375 3.6375 17.4375C2.55 16.6875 3.7125 16.725 3.7125 16.725C4.9125 16.8 5.55 17.9625 5.55 17.9625C6.6375 19.8 8.3625 19.275 9.0375 18.975C9.15 18.1875 9.45 17.6625 9.7875 17.3625C7.125 17.0625 4.3125 16.0125 4.3125 11.4375C4.3125 10.125 4.7625 9.075 5.55 8.2125C5.4375 7.9125 5.025 6.675 5.6625 5.025C5.6625 5.025 6.675 4.6875 8.9625 6.2625C9.9375 6 10.95 5.85 11.9625 5.85C12.975 5.85 14.025 6 14.9625 6.2625C17.25 4.725 18.2625 5.025 18.2625 5.025C18.9 6.675 18.4875 7.9125 18.375 8.2125C19.1625 9.0375 19.6125 10.125 19.6125 11.4375C19.6125 16.05 16.8 17.0625 14.1375 17.3625C14.55 17.7375 14.9625 18.45 14.9625 19.575C14.9625 21.1875 14.9625 22.4625 14.9625 22.875C14.9625 23.2125 15.1875 23.5875 15.7875 23.4375C20.55 21.7875 24 17.2875 24 12C24 5.3625 18.6375 0 12 0Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://medium.com/dfinity-network-blog">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22.3125 1H1.6875C1.50516 1 1.3303 1.07243 1.20136 1.20136C1.07243 1.3303 1 1.50516 1 1.6875L1 22.3125C1 22.4948 1.07243 22.6697 1.20136 22.7986C1.3303 22.9276 1.50516 23 1.6875 23H22.3125C22.4948 23 22.6697 22.9276 22.7986 22.7986C22.9276 22.6697 23 22.4948 23 22.3125V1.6875C23 1.50516 22.9276 1.3303 22.7986 1.20136C22.6697 1.07243 22.4948 1 22.3125 1V1ZM19.2768 6.21228L18.0971 7.34356C18.0471 7.38153 18.0085 7.43245 17.9854 7.4908C17.9623 7.54916 17.9557 7.61272 17.9661 7.67459V15.9875C17.9557 16.0494 17.9623 16.1129 17.9854 16.1713C18.0085 16.2296 18.0471 16.2806 18.0971 16.3185L19.2493 17.4498V17.698H13.4534V17.4498L14.6469 16.2903C14.7641 16.1731 14.7641 16.1388 14.7641 15.9593V9.24072L11.4455 17.6698H10.9987L7.13319 9.24072V14.8899C7.11729 15.0071 7.12828 15.1264 7.16533 15.2387C7.20237 15.351 7.2645 15.4535 7.347 15.5382L8.89937 17.4213V17.6695H4.49731V17.4213L6.04969 15.5382C6.13152 15.4534 6.19226 15.3505 6.22701 15.2379C6.26177 15.1253 6.26956 15.0061 6.24975 14.8899V8.35866C6.25855 8.26945 6.24627 8.17943 6.21391 8.09584C6.18155 8.01225 6.13001 7.93743 6.06344 7.87741L4.68362 6.21503V5.96684H8.96847L12.2805 13.2303L15.1924 5.96684H19.2768V6.21228Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+        <a class="social-icon-link" target="blank" href="https://twitter.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23 5.33654C22.175 5.67308 21.3156 5.94231 20.4219 6.04327C21.35 5.50481 22.0719 4.62981 22.4156 3.58654C21.5562 4.09135 20.5938 4.46154 19.5625 4.66346C18.7031 3.78846 17.5344 3.25 16.2281 3.25C13.7187 3.25 11.725 5.23558 11.725 7.65865C11.725 7.99519 11.7594 8.33173 11.8281 8.66827C8.08125 8.5 4.74688 6.71635 2.54688 4.05769C2.16875 4.69712 1.92813 5.47115 1.92813 6.27885C1.92813 7.82692 2.71875 9.17308 3.92188 9.94712C3.16562 9.91346 2.47812 9.71154 1.89375 9.40865C1.89375 9.44231 1.89375 9.44231 1.89375 9.47596C1.89375 11.6298 3.44063 13.4135 5.50313 13.8173C5.125 13.9183 4.7125 13.9856 4.3 13.9856C4.025 13.9856 3.71562 13.9519 3.44062 13.9183C4.025 15.6683 5.675 16.9471 7.66875 16.9808C6.12187 18.1587 4.1625 18.8654 2.06562 18.8654C1.6875 18.8654 1.34375 18.8317 1 18.7981C2.99375 20.0096 5.36563 20.75 7.90938 20.75C16.2281 20.75 20.7656 14.0192 20.7656 8.16346C20.7656 7.96154 20.7656 7.79327 20.7656 7.59135C21.625 6.98558 22.3813 6.21154 23 5.33654Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://forum.dfinity.org/">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12.0932 1C6.0727 1 1 5.83706 1 11.8085C1 12 1.00488 23 1.00488 23L12.0933 22.9901C18.1188 22.9901 23 17.9666 23 11.9951C23 6.02373 18.1188 1 12.0932 1ZM12 18.2857C11.0473 18.2857 10.1388 18.0745 9.32853 17.6916L5.34597 18.6786L6.47047 14.9956C5.98926 14.1067 5.71423 13.0853 5.71423 12C5.71423 8.52815 8.52811 5.71428 12 5.71428C15.4719 5.71428 18.2857 8.52815 18.2857 12C18.2857 15.472 15.4719 18.2857 12 18.2857Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://www.linkedin.com/company/dfinity'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M1 4.35878C1 3.01688 2.03589 2 3.61924 2C5.20139 2 6.17406 3.01448 6.20507 4.35519C6.20507 5.67205 5.20139 6.71456 3.58942 6.71456H3.55841C2.00666 6.71456 1 5.67562 1 4.35878ZM17.5581 8.28158C15.1017 8.28158 13.5625 9.61217 13.278 10.5449V8.41225H8.46122C8.52324 9.54475 8.46122 21.9995 8.46122 21.9995H13.278V14.647C13.278 14.5987 13.2778 14.5505 13.2775 14.5025C13.2756 14.1436 13.2736 13.7952 13.383 13.5365C13.714 12.7194 14.4255 11.8719 15.7046 11.8719C17.3775 11.8719 18.1378 13.128 18.1378 14.9685V21.9995H23V14.4448C23 10.236 20.6056 8.28158 17.5581 8.28158ZM1.55371 8.41275H5.84157V22H1.55371V8.41275Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+        <a class="social-icon-link" target="blank" href="https://youtube.com/dfinity">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23.775 7.6375C23.775 7.6375 23.55 5.9875 22.8375 5.2375C21.9375 4.3 20.8875 4.2625 20.4375 4.225C17.025 4 12 4 12 4C12 4 6.975 4 3.6 4.225C3.1125 4.2625 2.1 4.3 1.2 5.2375C0.4875 5.95 0.2625 7.6375 0.2625 7.6375C0.2625 7.6375 0 9.5875 0 11.5375V13.375C0 15.325 0.225 17.275 0.225 17.275C0.225 17.275 0.45 18.925 1.1625 19.675C2.0625 20.6125 3.2625 20.6125 3.825 20.6875C5.7375 20.875 12 20.9125 12 20.9125C12 20.9125 17.025 20.9125 20.4 20.65C20.8875 20.6125 21.9 20.575 22.8 19.6375C23.5125 18.925 23.7375 17.2375 23.7375 17.2375C23.7375 17.2375 24 15.2875 24 13.3375V11.5C24 9.5875 23.775 7.6375 23.775 7.6375ZM9.525 15.55V8.8L16.0125 12.175L9.525 15.55Z"
+              fill="#333333" />
+          </svg>
+
+        </a>
+
+      </div>
+    </nav>
+
+    <div class="legal-container">
+      <span class="legal" id="year">
+        © 2020 DFINITY
+      </span>
+      <a class="legal footer-link" href="http://www.dfinity.org/terms-of-use">
+        Terms of Use
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/cookie-policy">
+        Cookie Policy
+      </a>
+      <a class="legal footer-link" href="http://www.dfinity.org/privacy-policy">
+        Privacy Policy
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  var today = new Date();
+  var year = today.getFullYear();
+  document.getElementById("year").innerHTML = `© ${year} DFINITY`;
+</script><script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+    apiKey: 'b93d56cc4b00b0afbcdaacab04dcf25b',
+    indexName: 'dfinity_sdk',
+    inputSelector: '.search-input',
+    debug: false // Set debug to true if you want to inspect the dropdown
+  });
+</script>
+
+<!-- Start of dfinity Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=53121947-c10a-484c-b99b-f89a9fb6f63e"> </script>
+<!-- End of dfinity Zendesk Widget script -->
+
+  </body>
+</html>
